@@ -2,11 +2,14 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+// heroku will set. if local it will use 3000
+const port = process.env.PORT || 3000;
+console.log(`my port: ${port}`);
+
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
-
 
 app.use((req, res, next) => {
   var now = new Date().toString();
@@ -65,6 +68,7 @@ app.get('/bad', (req, res) => {
 })
 // set up port to liston on. 3000 is typical for local dev.
 // second argument is optional function
-app.listen(3000, () => {
-  console.log('Server is up on port 3000');
+// changing to ENVIRONMENT variables for heroku deployment
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}`);
 });
